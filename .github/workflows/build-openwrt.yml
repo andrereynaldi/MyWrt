@@ -26,9 +26,9 @@ jobs:
       - name: Run Build for S905X
         run: |
           cd amlogic
-          sudo bash make -d ../config -k s905x -v auto -s ${{ github.event.inputs.kernel || 'flippy' }}
+          sudo bash make.sh -d ../config -k s905x -v auto -s ${{ github.event.inputs.kernel || 'flippy' }}
 
       - name: Run Build for x86_64
         run: |
           cd amlogic
-          sudo bash make -d ../config -k x86_64 -v auto -s ${{ github.event.inputs.kernel || 'flippy' }}
+          sudo bash make.sh -d ../config -k x86_64 -v auto -s ${{ github.event.inputs.kernel || 'flippy' }}
