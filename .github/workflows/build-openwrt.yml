@@ -1,0 +1,34 @@
+name: Build OpenWrt Firmware
+
+on:
+  workflow_dispatch:
+    inputs:
+      kernel:
+        description: 'Kernel Source (flippy or ophub)'
+        required: false
+        default: 'flippy'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build OpenWrt with OPHUB
+
+    steps:
+      - name: Checkout My Repo
+        uses: actions/checkout@v3
+
+      - name: Clone OPHUB Build Repo
+        uses: actions/checkout@v3
+        with:
+          repository: ophub/amlogic-s9xxx-openwrt
+          path: amlogic
+
+      - name: Run Build for S905X
+        run: |
+          cd amlogic
+          sudo bash make -d ../config -k s905x -v auto -s ${{ github.event.inputs.kernel || 'flippy' }}
+
+      - name: Run Build for x86_64
+        run: |
+          cd amlogic
+          sudo bash make -d ../config -k x86_64 -v auto -s ${{ github.event.inputs.kernel || 'flippy' }}
